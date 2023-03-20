@@ -1,0 +1,32 @@
+# FROM node:16-alpine 
+
+# WORKDIR '/app'
+
+# Install dependencies
+# COPY package.json . 
+# RUN npm install 
+
+# Copy the remaining files 
+# COPY . .
+
+# Startup for the server 
+# CMD ["npm", "run", "start"]
+
+
+FROM node:16-alpine
+
+
+USER node
+
+RUN mkdir -p /home/node/app
+WORKDIR /home/node/app
+
+# Copy the package json file and do npm install 
+COPY --chown=node:node ./package.json ./
+RUN npm install
+
+# Copy the rest of the files. 
+# Technically no need to have this here because of volume referencing, but good practice to leave this here. 
+COPY --chown=node:node ./ ./
+
+CMD ["npm", "run", "start"]
