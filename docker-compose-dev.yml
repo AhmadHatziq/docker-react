@@ -1,0 +1,30 @@
+# This file is used to create the dev environment and run locally. 
+# Need to use the -f flag to build. 
+# Command to run: docker-compose -f docker-compose-dev.yml up
+#                 docker-compose -f docker-compose-dev.yml up --build
+#                 docker-compose -f docker-compose-dev.yml down
+
+version: '3'
+services: 
+  web: 
+    build: 
+      context: .  # This specifies where we want the folders to be pulled from ie the current wordking directory '.' 
+      dockerfile: Dockerfile.dev 
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - /home/node/app/node_modules # Do not map this folder
+      - .:/home/node/app            # Map '.', the current working directory into the /app folder inside the container 
+
+  tests: 
+    build: 
+      context: .  
+      dockerfile: Dockerfile.dev 
+    volumes: 
+      - /home/node/app/node_modules 
+      - .:/home/node/app 
+    command: ["npm", "run", "test"]
+
+
+
+
