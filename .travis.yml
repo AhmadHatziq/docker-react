@@ -8,6 +8,17 @@ before_install:
 script: 
   - docker run -e CI=true docker_image npm run test 
 
+deploy: 
+  provider: elasticbeanstalk # Travis CI comes pre-configured to deploy to some selected providers
+  
+  # Depends on the region where the instance is in. 
+  # If the URL is at Docker-env.adadsa.us-west-2.elasticbeanstalk.com, the region is us-west-2 
+  region:  "us-east-1"
+
+  # Name of the app
+  app: "docker-react"
+  
+
 
 
 
